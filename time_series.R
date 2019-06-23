@@ -75,10 +75,11 @@ candidate_time_series <- function(selection){
     ggplot(candidate_interest, aes(date, hits, color = keyword)) +
         geom_line() +
         theme_minimal() +
+        labs(title = "Search Interst over Time", x = "Date", y = "Google Trends Interest Score", color = "Search Term") +
         geom_point(data = fox_appearance_labels,
                    size = 2, 
                    x = date[selection], 
-                   y = hits[selection], 
+                   y = hits[selection],
                    color = stored_labels[selection], 
                    fill = stored_labels[selection]) +
         geom_text(data = fox_appearance_labels, 
@@ -87,8 +88,3 @@ candidate_time_series <- function(selection){
                   nudge_y = 3,
                   fontface = "bold")
 }
-
-# Produce the time series
-#Test_TS <- candidate_time_series(selection = 3)
-#Test_TS
-

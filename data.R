@@ -33,9 +33,6 @@ write.csv(Master_interest, file = "candidate_interest.csv")
 
 ### For the Maps ###
 
-# build the US map
-statesMap = ggplot2::map_data("state")
-
 # To get the regional interest information for maping 
 Regional_Interest <- function(candidate, date1, date2) {
     Trend <- gtrends(candidate, 

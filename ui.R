@@ -1,32 +1,38 @@
-# UX
+# UI - currently only fluid page, no real need for dashboard - yet
 
 library(shiny)
 library(shinydashboard)
 
 
-# I think I like you're style a bit better, but I think we might want tabs up top eventually.
-# This is osmething simple for testing the tabs etc
 
-# This is tabs up top
 ui <- fluidPage(
-
-    titlePanel("Top Tabs - 2020 Insights"),
-
+    titlePanel("The road to 2020"),
+    tags$div(class="header", checked=NA,
+             tags$p("Do Fox News town hall appearances affect Google search interest for 2020 candidates?")),
+    hr(),
+    
     sidebarLayout(
-
         sidebarPanel(
-            box(selectInput("candidate_selected",
-                            label = "Select a Candidate",
-                            choices = c("Bernie Sanders" = 1,
-                                        "Pete Buttigieg"  = 2,
-                                        "Kirsten Gillibrand" = 3),
-                            selected = 1)
-            )
+            selectInput("candidate_selected",
+                        label = "Select a Candidate",
+                        choices = c("Bernie Sanders" = 1,
+                                    "Pete Buttigieg"  = 2,
+                                    "Kirsten Gillibrand" = 3),
+                        selected = 1)
         ),
-
+        
         mainPanel(
             tabsetPanel(
-                tabPanel("Time Series", plotOutput("TS"))
+                tabPanel("Related terms", 
+                         fluidRow(
+                             verbatimTextOutput("Word Cloud stuff"),
+                             plotOutput("wordcloud")
+                             )
+                         ),
+                tabPanel("Interest by region", 
+                             plotOutput("Before_Map"),
+                             plotOutput("After_Map")),
+                tabPanel("Interest over time", plotOutput("TS"))
             )
         )
     )
