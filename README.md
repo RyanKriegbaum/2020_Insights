@@ -2,7 +2,7 @@
 
 ### Measuring the Effect of a Fox News Appearance for 2020 Democratic Candidates based on Google Trends
 
-The field of Democratic candidates running for U.S. president in 2020 is sprawling. With 24 and counting, American voters are overwhelmed by the sheer size of the field, and many of the candidates struggle to achieve any kind of name recognition. Most candidates are currently polling around 1%, and likely won’t make it onto the debate stages at the end of June 2019.
+The field of Democratic candidates running for U.S. president in 2020 is sprawling. With 24 and counting, American voters are overwhelmed by the sheer size of the field, and many of the candidates struggle to achieve any kind of name recognition. Most candidates are currently polling around 1%, and some likely won’t make it onto the debate stages at the end of June 2019.
 
 That’s what’s made the offers from Fox News for candidates to join their anchors onstage for a town hall discussion increasingly appealing. While some Democrats, like Elizabeth Warren and Kamala Harris, have flat out rejected their invitations, others have gladly accepted. Those appearing are likely hoping that the highly popular right-leaning television network will help boost their name recognition and drum up interest across a broader spectrum of Americans. 
 
