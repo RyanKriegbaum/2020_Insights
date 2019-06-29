@@ -51,7 +51,7 @@ sc <- spark_connect(master = "local", spark_home = "/opt/spark")
 
 # Loading the texts into Spark
 Spark_Bernie <- spark_read_text(sc, "bernie_text", "bernie_related.txt", overwrite = TRUE)
-Spark_Pete <- spark_read_text(sc, "pete_text", "pete_related.txt", overwrite = TRUE)
+
 
 
 ### Here is a complete run through for the processing for Bernie
@@ -72,6 +72,8 @@ bernie_words <- Spark_Bernie %>%                                            # Se
 # To see what we can see (examine the word list)
 glimpse(bernie_words)
 
+
+Spark_Pete <- spark_read_text(sc, "pete_text", "pete_related.txt", overwrite = TRUE)
 # Grouping by unique words, tallying the number of occurrences and sorting from highest to lowest
 bernie_word_count <- bernie_words %>%
     filter(!word == "bernie", !word == "sanders") %>% 
