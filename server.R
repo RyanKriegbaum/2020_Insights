@@ -53,4 +53,37 @@ shinyServer(function(input,output){
         # Output from the function and selection
         candidate_after_maps[[selected_candidate]]
     })
+    
+    #Interest_by_Viewers
+    output$Interest_by_Viewers <- renderPlot({
+        
+        # function and data all defined in interest_maps.R
+        source(file = "tv_views.R", local = TRUE)
+        
+        # Output from the function and selection
+        Interest_by_Viewers
+        
+    })
+    
+    #Interest_by_Date
+    output$Interest_by_Date <- renderPlot({
+        
+        # function and data all defined in interest_maps.R
+        source(file = "tv_views.R", local = TRUE)
+        
+        # Output from the function and selection
+        Interest_by_Date
+        
+    })
+    
+    #Viewers_by_Date
+    output$Viewers_by_Date <- renderPlot({
+        
+        # function and data all defined in interest_maps.R
+        source(file = "tv_views.R", local = TRUE)
+        
+        # Output from the function and selection
+        Viewers_by_Date
+        
+    })
 })

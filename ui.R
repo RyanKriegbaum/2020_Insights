@@ -21,12 +21,12 @@ insights_body <- dashboardBody(
     fluidRow(
         tabBox(
             width = 12,
-            # Tab for related Terms
-            # word_cloud.R or spark.R
-            tabPanel("Related Terms",
-                     "Word Cloud made up of related Google search terms for:", 
-                     plotOutput("wordcloud")
+            # Tab for Search Interest over Time
+            # time_series.R or stream.R
+            tabPanel("Interest Over Time", "Search Interest over time, with selected candidates appearance date highlighted.",
+                     plotOutput("TS")
             ),
+            
             # Tab for interest by regions 
             # interest_maps.R
             tabPanel("Interest by Region", 
@@ -34,10 +34,21 @@ insights_body <- dashboardBody(
                      plotOutput("Before_Map"),
                      plotOutput("After_Map")
             ),
-            # Tab for Search Interest over Time
-            # time_series.R or stream.R
-            tabPanel("Interest Over Time", "Search Interest OverTime, with selected candidates appearance date highlighted.",
-                     plotOutput("TS"))
+            
+            # Tab for related Terms
+            # word_cloud.R or spark.R
+            tabPanel("Related Terms",
+                     "Word Cloud made up of related Google search terms for:", 
+                     plotOutput("wordcloud")
+            ),
+            
+            # Viewers over time
+            # tv_views.R
+            tabPanel("Viewers Over Time", "Viewership over time, and how it affected Interest:",
+                     #plotOutput("Interest_by_Viewers"),
+                     plotOutput("Viewers_by_Date")),
+                     plotOutput("Interest_by_Date")
+                     
         )
     )
 )

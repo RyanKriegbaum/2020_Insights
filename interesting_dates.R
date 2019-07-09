@@ -11,6 +11,8 @@ list_of_candidates <- c("Bernie Sanders",
                         "Amy Klobuchar", 
                         "Julian Castro")
 
+
+
 library(lubridate)
 
 bernie_fox_appearance <- ymd("2019-04-15")

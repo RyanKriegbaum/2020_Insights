@@ -11,9 +11,8 @@ statesMap = ggplot2::map_data("state")
 ### Dates of Interest
 
 # Fox Appearance Dates
-bernie_fox_appearance <- ymd("2019-04-15")
-pete_fox_appearance <- ymd("2019-05-21")
-gilli_fox_appearance <- ymd("2019-06-02")
+source(file = "interesting_dates.R", local = TRUE)
+
 
 # Function to declare a few data types to prevent errors and coersion later
 standardised <- function(csv_file){
@@ -26,20 +25,24 @@ standardised <- function(csv_file){
 # Step 1 
 # Load the data (previously constructed in data.R)
 ### Sanders map data
-Sanders_before <- read.csv("Sanders_before.csv") %>% standardised()
-Sanders_after <- read.csv("Sanders_after.csv") %>% standardised()
+sanders_before <- read.csv("Data/Sanders_before.csv") %>% standardised()
+sanders_after <- read.csv("Data/Sanders_after.csv") %>% standardised()
 
 # Buttigieg map data
-Pete_before <- read.csv("Pete_before.csv") %>% standardised()
-Pete_after <- read.csv("Pete_after.csv") %>% standardised()
+pete_before <- read.csv("Data/Pete_before.csv") %>% standardised()
+pete_after <- read.csv("Data/Pete_after.csv") %>% standardised()
 
 # Gillibrand map data
-Gilli_before <- read.csv("Gilli_before.csv") %>% standardised()
-Gilli_after <- read.csv("Gilli_after.csv") %>% standardised()
+gilli_before <- read.csv("Data/Gilli_before.csv") %>% standardised()
+gilli_after <- read.csv("Data/Gilli_after.csv") %>% standardised()
 
 # Klobuchar map data
-Amy_before <- read.csv("Amy_before.csv") %>% standardised()
-Amy_after <- read.csv("Amy_after.csv") %>% standardised()
+amy_before <- read.csv("Data/Amy_before.csv") %>% standardised()
+amy_after <- read.csv("Data/Amy_after.csv") %>% standardised()
+
+# Castro
+castro_before <- read.csv("Data/Castro_before.csv") %>% standardised()
+castro_after <- read.csv("Data/Castro_after.csv") %>% standardised()
 
 # For joining the data on geographic data
 Map_Prep <- function(candidate_data){
@@ -79,19 +82,38 @@ Make_Map <- function(map_info, map_title, date1, date2) {
 
 
 # Make the Sanders maps
-Sanders_map_before <- Make_Map(Map_Prep(Sanders_before), "\"Bernie Sanders\" search interest before Fox appearance", bernie_fox_appearance-1, bernie_fox_appearance)
-Sanders_map_after <- Make_Map(Map_Prep(Sanders_after), "\"Bernie Sanders\" search interest after Fox appearance", bernie_fox_appearance, bernie_fox_appearance+1)
+sanders_map_before <- Make_Map(Map_Prep(sanders_before), "\"Bernie Sanders\" search interest before Fox appearance", bernie_fox_appearance-1, bernie_fox_appearance)
+sanders_map_after <- Make_Map(Map_Prep(sanders_after), "\"Bernie Sanders\" search interest after Fox appearance", bernie_fox_appearance, bernie_fox_appearance+1)
 
 # Make the Buttigieg maps
-Pete_map_before <- Make_Map(Map_Prep(Pete_before), "\"Pete Buttigieg\" search interest before Fox appearance", pete_fox_appearance-1, pete_fox_appearance)
-Pete_map_after <- Make_Map(Map_Prep(Pete_after), "\"Pete Buttigieg\" search interest after Fox appearance", pete_fox_appearance, pete_fox_appearance+1)
+pete_map_before <- Make_Map(Map_Prep(pete_before), "\"Pete Buttigieg\" search interest before Fox appearance", pete_fox_appearance-1, pete_fox_appearance)
+pete_map_after <- Make_Map(Map_Prep(pete_after), "\"Pete Buttigieg\" search interest after Fox appearance", pete_fox_appearance, pete_fox_appearance+1)
 
 # Make the Gillibrand maps
-Gilli_map_before <- Make_Map(Map_Prep(Gilli_before), "\"Kirsten Gillibrand\" search interest before Fox appearance", gilli_fox_appearance-1, gilli_fox_appearance)
-Gilli_map_after <- Make_Map(Map_Prep(Gilli_after), "\"Kirsten Gillibrand\" search interest after Fox appearance", gilli_fox_appearance, gilli_fox_appearance+1)
+gilli_map_before <- Make_Map(Map_Prep(gilli_before), "\"Kirsten Gillibrand\" search interest before Fox appearance", gilli_fox_appearance-1, gilli_fox_appearance)
+gilli_map_after <- Make_Map(Map_Prep(gilli_after), "\"Kirsten Gillibrand\" search interest after Fox appearance", gilli_fox_appearance, gilli_fox_appearance+1)
 
-# For selection within the Shiny App
-candidate_before_maps <- list(Sanders_map_before, Pete_map_before, Gilli_map_before)
-candidate_after_maps <- list(Sanders_map_after, Pete_map_after, Gilli_map_after)
+# Make the Amy maps
+amy_map_before <- Make_Map(Map_Prep(amy_before), "\"Amy Klobuchar\" search interest before Fox appearance", amy_fox_appearance-1, amy_fox_appearance)
+amy_map_after <- Make_Map(Map_Prep(amy_after), "\"Amy Klobuchar\" search interest after Fox appearance", amy_fox_appearance, amy_fox_appearance+1)
+
+# Make the Gillibrand maps
+castro_map_before <- Make_Map(Map_Prep(castro_before), "\"Julian Castro\" search interest before Fox appearance", castro_fox_appearance-1, castro_fox_appearance)
+castro_map_after <- Make_Map(Map_Prep(castro_after), "\"Julian Castro\" search interest after Fox appearance", castro_fox_appearance, castro_fox_appearance+1)
+
+
+### For selection within the Shiny App
+
+candidate_before_maps <- list(sanders_map_before, 
+                              pete_map_before, 
+                              gilli_map_before, 
+                              amy_map_before, 
+                              castro_map_before)
+
+candidate_after_maps <- list(sanders_map_after, 
+                             pete_map_after, 
+                             gilli_map_after, 
+                             amy_map_after, 
+                             castro_map_after)
 
 
