@@ -2,6 +2,7 @@ library(gtrendsR)
 library(tidytext)
 library(dplyr)
 library(ggwordcloud)
+library(stringr)
 
 # Data for related searches from gTrends 
 # TODO: Speed up Shiny load times by converting to trimmed csv
@@ -30,7 +31,8 @@ Word_Cloud <- function(candidate_related) {
     filter_words <- as.vector(filter_words[[1]])
     
     preped %>% 
-        filter(!word %in% filter_words) %>% 
+        filter(!word %in% filter_words) %>%
+        head(25) %>% 
         collect() %>%
         with(ggwordcloud(word, n, min.freq = 1,
                          colors = c("#999999", "#E69F00", "#56B4E9","#56B4E9")

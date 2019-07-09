@@ -26,7 +26,7 @@ shinyServer(function(input,output){
         source(file = "time_series.R", local = TRUE) 
         
         # Output from the function and selection
-        candidate_time_series(selected_candidate, fox_appearance_labels) 
+        candidate_time_series(selected_candidate, fox_data) 
         
     })
     

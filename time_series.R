@@ -7,28 +7,14 @@ library(ggpmisc)        # again for annotation and cleaner code
 
 
 ### Dates of Interest
-
-# Fox Appearance Dates
-bernie_fox_appearance <- ymd("2019-04-15")
-pete_fox_appearance <- ymd("2019-05-21")
-gilli_fox_appearance <- ymd("2019-06-02")
-
-
-# #Other interesting dates
-# pete_ellen_appearance <- ymd("2019-04-12")
-# warren_rejects_fox <- ymd("2019-05-14")
+source(file = "interesting_dates.R", local = TRUE)
 
 ### Loading the Data
 
 # reading the csv created in data.R
-candidate_interest <- read.csv("candidate_interest.csv")
-
-# declaring data types
-candidate_interest <- candidate_interest %>%
+Candidate_Interest <- read.csv("Candidate_Interest.csv") %>%
     as_tibble() %>%
     mutate(date = ymd(date), hits = as.numeric(hits))
-
-### Appearances
 
 # Function to find the gTrends "hits" score for any dates of interest
 hits_of_interest <- function(data_set, candidate, date_of_interest){
@@ -39,45 +25,63 @@ hits_of_interest <- function(data_set, candidate, date_of_interest){
     return(appearance)
 }
 
-# Bernie Sanders appeared on Fox News on April 15, 2019; 
-bernie_appearance_hits <- hits_of_interest(candidate_interest, "Bernie Sanders", bernie_fox_appearance)
+hits_list <- function(trends, candidates, dates) {
+    hits <- c()
+    i <- 1
+    for(i in seq(1:length(candidates))){
+        hits <- hits %>% 
+            append( hits_of_interest(trends, candidates[i],dates[i]) )}
+    return(hits)
+}
 
-#Pete Buttigieg appeared on May 21, 2019;
-pete_appearance_hits <- hits_of_interest(candidate_interest, "Pete Buttigieg", pete_fox_appearance) 
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-#Kirsten Gillibrand appeared on June 2, 2019.
-gilli_appearance_hits <- hits_of_interest(candidate_interest, "Kirsten Gillibrand", gilli_fox_appearance)
+colors_list <- function(candidates){
+    color_list <- c()
+    for(i in seq(1:length(candidates))){
+        color_list <- color_list %>% 
+            append(cbPalette[i])
+    }
+} 
 
-# Create labels for the points 
-fox_appearance_labels <- data.frame(
-    candidate <- c("Bernie Sanders's Appearance", "Pete Buttigieg's Appearance", "Kirsten Gillibrand's Appearance"),
-    date <- c(bernie_fox_appearance, pete_fox_appearance, gilli_fox_appearance),
-    hits <- c(bernie_appearance_hits, pete_appearance_hits, gilli_appearance_hits), 
-    stored_labels <- c("coral3", "dodgerblue3", "green3")
+list_of_colors <- colors_list(list_of_candidates)
+
+fox_hits <- hits_list_maker(Candidate_Interest, list_of_candidates, fox_appearances)
+
+# Plot labels
+complete_labels <- c("Sanders' Appearance", 
+                     "Buttigieg's Appearance",
+                     "Gillibrand's Appearance", 
+                     "Klobuchar's Appearance",
+                     "Castro's Appearance")
+
+# Label data_frame
+fox_data <- data.frame(
+    keyword <- list_of_candidates,  
+    date <- fox_appearances,  
+    hits <- fox_hits,
+    candidate <- complete_labels,
+    colors <- list_of_colors
 )
 
-# # Create labels for the points 
-# other_interesting_labels <- data.frame(
-#     candidate <- c("Pete Buttigieg's Ellen Appearance", "Warren Reject's a Fox Appearance"),
-#     date <- c(pete_ellen_appearance, warren_rejects_fox),
-#     hits <- c(bernie_appearance_hits, pete_appearance_hits, gilli_appearance_hits), 
-#     stored_labels <- c("coral3", "dodgerblue3", "green3")
-# )
+
 
 # Plot the time series
-candidate_time_series <- function(selection, labels){
-    ggplot(candidate_interest, aes(date, hits, color = keyword)) +
-        geom_line() +
+candidate_time_series <- function(selection, labels_data){
+    ggplot(Candidate_Interest, aes(date, hits, color = keyword)) +
         theme_minimal() +
-        labs(x = "Date", y = "Google Trends Interest Score", color = "Search Term") +
-        geom_point(data = labels,
-                   size = 2, 
+        geom_line() +
+        geom_point(data = labels_data,
+                   inherit.aes = TRUE,
+                   show.legend = FALSE,
+                   size = 3,
                    x = date[selection], 
-                   y = hits[selection],
-                   color = stored_labels[selection], 
-                   fill = stored_labels[selection]) +
-        geom_text(data = labels, 
+                   y = hits[selection]) +
+        geom_text(data = labels_data, 
                   inherit.aes = FALSE,
                   mapping = aes(x = date[selection], y = hits[selection], label = candidate[selection]),
-                  nudge_y = 3)
+                  nudge_y = 3) +
+        labs(x = "Date", y = "Google Trends Interest Score", color = "Search Term") +
+        scale_fill_manual(values = list_of_colors)
 }
+

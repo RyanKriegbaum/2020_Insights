@@ -13,7 +13,9 @@ insights_body <- dashboardBody(
                                 label = "Select a Candidate", 
                                 choices = c("Bernie Sanders" = 1, 
                                             "Pete Buttigieg"  = 2,
-                                            "Kirsten Gillibrand" = 3),
+                                            "Kirsten Gillibrand" = 3,
+                                            "Amy Klobuchar" = 4,
+                                            "Julian Castro" = 5),
                                 selected = 1))
     ),
     fluidRow(

@@ -26,17 +26,20 @@ standardised <- function(csv_file){
 # Step 1 
 # Load the data (previously constructed in data.R)
 ### Sanders map data
-Sanders_before <- read.csv("sanders_before.csv") %>% standardised()
-Sanders_after <- read.csv("sanders_after.csv") %>% standardised()
+Sanders_before <- read.csv("Sanders_before.csv") %>% standardised()
+Sanders_after <- read.csv("Sanders_after.csv") %>% standardised()
 
 # Buttigieg map data
-Pete_before <- read.csv("pete_before.csv") %>% standardised()
-Pete_after <- read.csv("pete_after.csv") %>% standardised()
+Pete_before <- read.csv("Pete_before.csv") %>% standardised()
+Pete_after <- read.csv("Pete_after.csv") %>% standardised()
 
 # Gillibrand map data
-Gilli_before <- read.csv("gilli_before.csv") %>% standardised()
-Gilli_after <- read.csv("gilli_after.csv") %>% standardised()
+Gilli_before <- read.csv("Gilli_before.csv") %>% standardised()
+Gilli_after <- read.csv("Gilli_after.csv") %>% standardised()
 
+# Klobuchar map data
+Amy_before <- read.csv("Amy_before.csv") %>% standardised()
+Amy_after <- read.csv("Amy_after.csv") %>% standardised()
 
 # For joining the data on geographic data
 Map_Prep <- function(candidate_data){
@@ -92,24 +95,3 @@ candidate_before_maps <- list(Sanders_map_before, Pete_map_before, Gilli_map_bef
 candidate_after_maps <- list(Sanders_map_after, Pete_map_after, Gilli_map_after)
 
 
-# ### For specific hit differences - would be nice to be able to click on a state and see these
-# ### in a plotly environment
-# 
-# hitfinder <- function(dataset, state){
-#     dataset %>% 
-#     filter(region == state) %>% 
-#     select(hits)
-# }
-# 
-# # These can be made a intereactive based on selections in Shiny if we have time
-# # Cadidate selection based on candidate selected
-# # States as new selection - can I do this based on plotly clicks?
-# 
-# change <- function(before, after, state){
-#     hitfinder(after, state)-hitfinder(before, state) 
-# }
-# 
-# 
-# # Test case
-# bern_change <- change(Sanders_before, Sanders_after, "oregon")
-# bern_change
