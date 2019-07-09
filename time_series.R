@@ -11,6 +11,10 @@ source(file = "interesting_dates.R", local = TRUE)
 
 ### Loading the Data
 
+# # directly from data.R
+# source(file = "data.R", local = TRUE)
+# Candidate_Interest <- Master_Interest
+
 # reading the csv created in data.R
 Candidate_Interest <- read.csv("Data/Candidate_Interest.csv") %>%
     as_tibble() %>%

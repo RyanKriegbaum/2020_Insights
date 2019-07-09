@@ -5,21 +5,27 @@ library(stringr)
 
 # Data for related searches from gTrends 
 # TODO: Speed up Shiny load times by converting to trimmed csv
-source(file = "gtrends_script.R", local = TRUE)
-source(file = "interesting_dates.R", local = TRUE)
 
-# related <- list()
-# 
-# for(candidate in list_of_candidates){
-#     related %>% 
-# }
-# list_of_candidates[1]
+# Data from data.R
+#source(file = "data.R", local = TRUE)
 
-Bernie_related <- Master_gTrends(c("Bernie Sanders"))$related_queries
-Pete_related <- Master_gTrends(c("Pete Buttigieg"))$related_queries
-Gilli_related <- Master_gTrends(c("Kirsten Gillibrand"))$related_queries
-Amy_related <- Master_gTrends(c("Amy Klobuchar"))$related_queries
-Castro_related <- Master_gTrends(c("Julian Castro"))$related_queries
+#Data from CSVs
+standardized_related <- function(csv_file){
+    standardized_csv <- csv_file %>% 
+        as_tibble() %>%
+        mutate(subject = as.character(subject), 
+               related_queries = as.character(related_queries),
+               value = as.character(value),
+               geo = as.character(geo),
+               keyword = as.character(keyword))
+    return(standardized_csv)
+}
+
+sanders_related <- read.csv(file = "Data/sanders_related.csv") %>% standardized_related()
+pete_related <- read.csv(file = "Data/pete_related.csv") %>% standardized_related()
+gilli_related <- read.csv(file = "Data/gilli_related.csv") %>% standardized_related()
+amy_related <- read.csv(file = "Data/amy_related.csv") %>% standardized_related()
+castro_related <- read.csv(file = "Data/castro_related.csv") %>% standardized_related()
 
 # Tidytext function to prep the words for the cloud
 Word_Prep <- function(related_data){
@@ -54,14 +60,15 @@ Word_Cloud <- function(candidate_related) {
 }
 
 
+
 # Word Clouds
-Bernie_Cloud <- Word_Cloud(Bernie_related)
-Pete_Cloud <- Word_Cloud(Pete_related)
-Gilli_Cloud <- Word_Cloud(Gilli_related)
-Amy_Cloud <- Word_Cloud(Amy_related)
-Castro_Cloud <- Word_Cloud(Castro_related)
+sanders_cloud <- Word_Cloud(sanders_related)
+pete_cloud <- Word_Cloud(pete_related)
+gilli_cloud <- Word_Cloud(gilli_related)
+amy_cloud <- Word_Cloud(amy_related)
+castro_cloud <- Word_Cloud(castro_related)
 
 
 # List of premade clouds for using our Shiny selection
 # TODO: make these dynamically load to speed up initial load time
-shiny_word_clouds <- list(Bernie_Cloud, Pete_Cloud, Gilli_Cloud, Amy_Cloud, Castro_Cloud)
+shiny_word_clouds <- list(sanders_cloud, pete_cloud, gilli_cloud, amy_cloud, castro_cloud)

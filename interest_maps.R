@@ -15,34 +15,38 @@ source(file = "interesting_dates.R", local = TRUE)
 
 
 # Function to declare a few data types to prevent errors and coersion later
-standardised <- function(csv_file){
+standardized_maps <- function(csv_file){
     standardized_csv <- csv_file %>% 
         as_tibble() %>%
         mutate(date = ymd(date), hits = as.numeric(hits), region = as.character(region))
     return(standardized_csv)
 }
 
-# Step 1 
-# Load the data (previously constructed in data.R)
+### Step 1 
+## Load the data (previously constructed in data.R)
+
+# # directly from data.R
+# source(file = "data.R", local = TRUE)
+
 ### Sanders map data
-sanders_before <- read.csv("Data/Sanders_before.csv") %>% standardised()
-sanders_after <- read.csv("Data/Sanders_after.csv") %>% standardised()
+sanders_before <- read.csv("Data/sanders_before.csv") %>% standardized_maps()
+sanders_after <- read.csv("Data/sanders_after.csv") %>% standardized_maps()
 
 # Buttigieg map data
-pete_before <- read.csv("Data/Pete_before.csv") %>% standardised()
-pete_after <- read.csv("Data/Pete_after.csv") %>% standardised()
+pete_before <- read.csv("Data/pete_before.csv") %>% standardized_maps()
+pete_after <- read.csv("Data/pete_after.csv") %>% standardized_maps()
 
 # Gillibrand map data
-gilli_before <- read.csv("Data/Gilli_before.csv") %>% standardised()
-gilli_after <- read.csv("Data/Gilli_after.csv") %>% standardised()
+gilli_before <- read.csv("Data/gilli_before.csv") %>% standardized_maps()
+gilli_after <- read.csv("Data/gilli_after.csv") %>% standardized_maps()
 
 # Klobuchar map data
-amy_before <- read.csv("Data/Amy_before.csv") %>% standardised()
-amy_after <- read.csv("Data/Amy_after.csv") %>% standardised()
+amy_before <- read.csv("Data/amy_before.csv") %>% standardized_maps()
+amy_after <- read.csv("Data/amy_after.csv") %>% standardized_maps()
 
 # Castro
-castro_before <- read.csv("Data/Castro_before.csv") %>% standardised()
-castro_after <- read.csv("Data/Castro_after.csv") %>% standardised()
+castro_before <- read.csv("Data/castro_before.csv") %>% standardized_maps()
+castro_after <- read.csv("Data/castro_after.csv") %>% standardized_maps()
 
 # For joining the data on geographic data
 Map_Prep <- function(candidate_data){

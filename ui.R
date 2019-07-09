@@ -23,35 +23,45 @@ insights_body <- dashboardBody(
             width = 12,
             # Tab for Search Interest over Time
             # time_series.R or stream.R
-            tabPanel("Interest Over Time", "Search Interest over time, with selected candidates appearance date highlighted.",
+            tabPanel("Interest Over Time", 
+                     "Search Interest over time, with selected candidates appearance date highlighted.",
+                     hr(),
                      plotOutput("TS")
             ),
             
             # Tab for interest by regions 
             # interest_maps.R
             tabPanel("Interest by Region", 
-                     "Regional Search Interest Before and After Appearance:", 
+                     "Regional Search Interest Before and After Appearance.",
+                     hr(),
                      plotOutput("Before_Map"),
+                     hr(),
                      plotOutput("After_Map")
             ),
             
             # Tab for related Terms
             # word_cloud.R or spark.R
             tabPanel("Related Terms",
-                     "Word Cloud made up of related Google search terms for:", 
+                     "Word Cloud made up of related Google search terms for:",
+                     hr(),
                      plotOutput("wordcloud")
             ),
             
             # Viewers over time
             # tv_views.R
-            tabPanel("Viewers Over Time", "Viewership over time, and how it affected Interest:",
-                     #plotOutput("Interest_by_Viewers"),
-                     plotOutput("Viewers_by_Date")),
-                     plotOutput("Interest_by_Date")
+            tabPanel("Viewers Over Time", 
+                     "Viewership over time, and how it affected Interest.",
+                     hr(),
+                     plotOutput("Viewers_by_Date"),
+                     hr(),
+                     plotOutput("Interest_by_Date"),
+                     hr(),
+                     plotOutput("Interest_by_Viewers")
+             )
                      
-        )
-    )
-)
+        ) # Closes tab box
+    ) # Closes main body fluid row
+) # Closes the body
 
 
 # One call to each component above

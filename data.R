@@ -14,18 +14,18 @@ library(lubridate)
 # gTrends pulls as a large list of tables, so we should clean and trim for Shiny
 source(file = "interesting_dates.R", local = TRUE)
 
-source(file = "trends_script.R", local = TRUE)
-Master_Interest <- Master_gTrends(list_of_candidates)
+source(file = "gtrends_script.R", local = TRUE)
+Master_DF <- Master_gTrends(list_of_candidates)
 
 
 
 ### For the Time Series ###
-Master_Interest <- Master_Interest$interest_over_time %>%
+Master_Interest <- Master_DF$interest_over_time %>%
     as_tibble() %>%
     mutate(date = ymd(date), hits = as.numeric(hits))
 
 # If we want a csv
-write.csv(Master_Interest, file = "Candidate_Interest.csv")
+write.csv(Master_Interest, file = "Data/Candidate_Interest.csv", row.names = FALSE)
 
 ##########################
 ###### For the Maps ######
@@ -66,36 +66,62 @@ after_maps <- function(candidate, appearance){
 ### CSV Creation
 
 #Sanders map data
-Sanders_before <- Regional_Interest("Bernie Sanders", bernie_fox_appearance-1, bernie_fox_appearance)
-write.csv(Sanders_before, file = "Sanders_before.csv")
+sanders_before <- Regional_Interest("Bernie Sanders", bernie_fox_appearance-1, bernie_fox_appearance)
+#write.csv(sanders_before, file = "sanders_before.csv", row.names = FALSE)
 
-Sanders_after <- Regional_Interest("Bernie Sanders", bernie_fox_appearance, bernie_fox_appearance+1)
-write.csv(Sanders_after, file = "Sanders_after.csv")
+sanders_after <- Regional_Interest("Bernie Sanders", bernie_fox_appearance, bernie_fox_appearance+1)
+#write.csv(sanders_after, file = "sanders_after.csv", row.names = FALSE)
 
 #Buttigieg map data
-Pete_before <- Regional_Interest("Pete Buttigieg", pete_fox_appearance-1, pete_fox_appearance)
-write.csv(Pete_before, file = "Pete_before.csv")
+pete_before <- Regional_Interest("Pete Buttigieg", pete_fox_appearance-1, pete_fox_appearance)
+#write.csv(pete_before, file = "pete_before.csv", row.names = FALSE)
 
-Pete_after <- Regional_Interest("Pete Buttigieg", pete_fox_appearance, pete_fox_appearance+1)
-write.csv(Pete_after, file = "Pete_after.csv")
+pete_after <- Regional_Interest("Pete Buttigieg", pete_fox_appearance, pete_fox_appearance+1)
+#write.csv(pete_after, file = "pete_after.csv", row.names = FALSE)
 
 #Gillibrand map data
-Gilli_before <- Regional_Interest("Kirsten Gillibrand", gilli_fox_appearance-1, gilli_fox_appearance)
-write.csv(Gilli_before, file = "Gilli_before.csv")
+gilli_before <- Regional_Interest("Kirsten Gillibrand", gilli_fox_appearance-1, gilli_fox_appearance)
+#write.csv(gilli_before, file = "gilli_before.csv", row.names = FALSE)
 
-Gilli_after <- Regional_Interest("Kirsten Gillibrand", gilli_fox_appearance, gilli_fox_appearance+1)
-write.csv(Gilli_after, file = "Gilli_after.csv")
+gilli_after <- Regional_Interest("Kirsten Gillibrand", gilli_fox_appearance, gilli_fox_appearance+1)
+#write.csv(gilli_after, file = "gilli_after.csv", row.names = FALSE)
 
 #Amy map data
-Amy_before <- Regional_Interest("Amy Klobuchar", amy_fox_appearance-1, amy_fox_appearance)
-write.csv(Amy_before, file = "Amy_before.csv")
+amy_before <- Regional_Interest("Amy Klobuchar", amy_fox_appearance-1, amy_fox_appearance)
+#write.csv(amy_before, file = "amy_before.csv", row.names = FALSE)
 
-Amy_after <- Regional_Interest("Amy Klobuchar", amy_fox_appearance, amy_fox_appearance+1)
-write.csv(Amy_after, file = "Amy_after.csv")
+amy_after <- Regional_Interest("Amy Klobuchar", amy_fox_appearance, amy_fox_appearance+1)
+#write.csv(amy_after, file = "amy_after.csv", row.names = FALSE)
 
 #Castro map data
-Castro_before <- before_maps(list_of_candidates[5], fox_appearances[5])
-write.csv(Castro_before, file = "Castro_before.csv")
+castro_before <- before_maps(list_of_candidates[5], fox_appearances[5])
+#write.csv(castro_before, file = "castro_before.csv", row.names = FALSE)
 
-Castro_after <- after_maps(list_of_candidates[5], fox_appearances[5])
-write.csv(Castro_after, file = "Castro_after.csv")
+castro_after <- after_maps(list_of_candidates[5], fox_appearances[5])
+#write.csv(castro_after, file = "castro_after.csv", row.names = FALSE)
+
+
+### Related Searches
+sanders_related <- Master_DF$related_queries %>% 
+    filter(keyword == list_of_candidates[1])
+
+pete_related <- Master_DF$related_queries %>% 
+    filter(keyword == list_of_candidates[2])
+
+gilli_related <- Master_DF$related_queries %>% 
+    filter(keyword == list_of_candidates[3])
+
+amy_related <- Master_DF$related_queries %>% 
+    filter(keyword == list_of_candidates[4])
+
+castro_related <- Master_DF$related_queries %>% 
+    filter(keyword == list_of_candidates[5])
+
+sanders_test <- Master_gTrends(list_of_candidates[1])$related_queries
+
+
+write.csv(sanders_related, file = "Data/sanders_related.csv", row.names = FALSE)
+write.csv(pete_related, file = "Data/pete_related.csv", row.names = FALSE)
+write.csv(gilli_related, file = "Data/gilli_related.csv", row.names = FALSE)
+write.csv(amy_related, file = "Data/amy_related.csv", row.names = FALSE)
+write.csv(castro_related, file = "Data/castro_related.csv", row.names = FALSE)
